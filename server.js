@@ -66,26 +66,31 @@ app.get("/scrape", function (req, res) {
         // Save the text and href of each link enclosed in the current element
         var title = $(articleElement).find("[class^='Card__hed']").text();
         console.log(title);
-        var link = $(articleElement).children("h1").attr("href");
-        var article = $(element).children("h2").text();
+        var link = "https://www.newyorker.com" + $(articleElement).find("[class^='Card__content']").children("a").attr("href");
+        console.log(link);
+        var summary = $(articleElement).find("[class^='Card__dek']").text();
+        console.log(summary);
+
+       
+        
         // If this found element had both a title and a link
-        if (title && link && article) {
+        if (title && link && summary) {
           // Insert the data in the scrapedData db
-          db.scrapedData.insert({
-            title: title,
-            link: link,
-            article: article
-          },
-            function (err, inserted) {
-              if (err) {
-                // Log the error if one is encountered during the query
-                console.log(err);
-              }
-              else {
-                // Otherwise, log the inserted data
-                console.log(inserted);
-              }
-            });
+          // db.scrapedData.insert({
+          //   title: title,
+          //   link: link,
+          //   summary: summary
+          // },
+          //   function (err, inserted) {
+          //     if (err) {
+          //       // Log the error if one is encountered during the query
+          //       console.log(err);
+          //     }
+          //     else {
+          //       // Otherwise, log the inserted data
+          //       console.log(inserted);
+          //     }
+          //   });
         }
       });
     });
