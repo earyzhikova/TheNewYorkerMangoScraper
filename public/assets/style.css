@@ -1,0 +1,27 @@
+body{
+  background-image: url(/assets/images/jscript.jpg);
+}
+
+.card-header a {
+  font-size: 150%;
+  color:black;
+}
+
+a#btnScrape.nav-link {
+  font-size: 120%;
+  color:red;  
+}
+
+.nav-link {
+  font-size: 120%;
+  color:black;
+}
+
+h2 {
+  width: 100%;
+  color: black;
+ }
+
+ marquee { 
+   overflow:visible; -moz-binding:none; 
+  }

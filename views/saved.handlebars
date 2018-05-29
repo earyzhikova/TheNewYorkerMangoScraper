@@ -21,17 +21,27 @@
 
 
 {{!-- Model --}}
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
+<div class="modal" id="myModal1" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">The New Yorker Scraper</h5>
+        <h5 id="titleinput" class="modal-title">Notes for Article: # <span id=idNumber"></span> </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Added <span id="articleQuantity"></span> New Articles!</p>
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" placeholder="No Notes for this article yet" id="basic-addon1">@</span>
+  </div>
+  <input type="text" class="form-control" placeholder="New Note" aria-label="Newnote" aria-describedby="basic-addon1">
+</div>
+        {{!-- <p id = "savenote" placeholder="No Notes for this article yet"></p>
+        <br>
+        <hr>
+        <br>
+        <p id="bodyinput" placeholder="New Note"></p> --}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
@@ -42,7 +52,7 @@
 <br>   
 <div id="wrapper">
   <!-- Content -->
-  <marquee behavior="scroll" direction="right"><h2>Looks like you don't have any saved articles!       </h2></marquee>
+  
 
        
 

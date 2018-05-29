@@ -1,1 +1,1 @@
-# WSJScraper
+# the New Yorker Scraper
