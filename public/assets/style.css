@@ -17,6 +17,10 @@ a#btnScrape.nav-link {
   color:black;
 }
 
+#articleNotes {
+  margin-right: 0.5%;
+}
+
 h2 {
   width: 100%;
   color: black;

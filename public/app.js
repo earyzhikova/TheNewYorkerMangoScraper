@@ -26,26 +26,19 @@ $(document).ready(function () {
     });
   });
 
-// Grab the articles as a json
-$.getJSON("/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append('<p data-id="' + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
-});
-
+  
   $(document).on('click', 'button.saveArticle', function () {
     var article = {}
     article.title = $(this).parent().parent().find("a").text();
     article.link = $(this).parent().parent().find("a").attr("href");
-    article.summary =$(this).parent().parent().find("p").text();
+    article.summary = $(this).parent().parent().find("p").text();
 
-    
-    $.post("/save/articles", function (data, status) {
-      
+
+    $.post("/save/articles", article ,function (data, status) {
+
+
       data = JSON.parse(data);
-    });
+    }, 'json');
     alert(article.link);
   });
 
