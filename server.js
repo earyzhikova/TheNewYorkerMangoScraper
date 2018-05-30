@@ -38,17 +38,17 @@ mongoose.connect(MONGODB_URI);
 
 // Main route 
 app.get("/", function (req, res) {
-  db.Article.find({}).then(function (dbArticle) {
+  // db.Article.find({}).then(function (dbArticle) {
     // console.log(dbArticle);
+  // });
     var hdbObject = {
-      articles: dbArticle
-
+      // articles: dbArticle
+      
     };
     res.render("index", hdbObject);
-  });
 });
 
-// Saved articles route
+// A route for saved article page
 
 app.get("/saved", function (req, res) {
   db.Article.find({}).then(function (dbArticle) {
@@ -61,7 +61,18 @@ app.get("/saved", function (req, res) {
   });
 });
 
+// route for saving an article to DB
 
+app.post("/save/article", function (req, res) {
+  db.Article.find({}).then(function (dbArticle) {
+    // console.log(dbArticle);
+    var hdbObject = {
+      articles: dbArticle
+
+    };
+    // res.render("saved", hdbObject);
+  });
+});
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function (req, res) {
   // db.Article.find({}).then(function (dbArticle) {
@@ -106,15 +117,15 @@ app.get("/scrape", function (req, res) {
         //   result.summary = summary;
 
         //   // Create a new Article using the `result` object built from scraping
-          db.Article.create(result)
-            .then(function (dbArticle) {
-              // View the added result in the console
-              console.log(dbArticle);
-            })
-            .catch(function (err) {
-              // If an error occurred, send it to the client
-              return res.json(err);
-            });
+          // db.Article.create(result)
+          //   .then(function (dbArticle) {
+          //     // View the added result in the console
+          //     console.log(dbArticle);
+          //   })
+          //   .catch(function (err) {
+          //     // If an error occurred, send it to the client
+          //     return res.json(err);
+          //   });
         });
       res.json(JSON.stringify(result));
       // });
@@ -142,7 +153,7 @@ app.get("/articles", function(req, res) {
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  db.Article.findOne({ _id: req.params.id })
+  db.ArticlefindOne({ _id: req.params.id })
     // ..and populate all of the notes associated with it
     .populate("note")
     .then(function(dbArticle) {
