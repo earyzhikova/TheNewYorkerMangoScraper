@@ -32,16 +32,21 @@
       </div>
       <div class="modal-body ">
         <div class="input-group mb-3 ">
-  <div class="input-group-prepend ">
-    <span class="input-group-text " placeholder="No Notes for this article yet " id="basic-addon1 ">@</span>
-  </div>
+  
   <input type="text " class="form-control " placeholder="New Note " aria-label="Newnote " aria-describedby="basic-addon1 ">
 </div>
-        {{!-- <p id = "savenote " placeholder="No Notes for this article yet "></p>
+
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">With textarea</span>
+  </div>
+  <textarea class="form-control" aria-label="With textarea"></textarea>
+</div>
+        <p id = "savenote " placeholder="No Notes for this article yet "></p>
         <br>
         <hr>
         <br>
-        <p id="bodyinput " placeholder="New Note "></p> --}}
+        <p id="bodyinput " placeholder="New Note "></p>
       </div>
       <div class="modal-footer ">
         <button type="button " class="btn btn-secondary " data-dismiss="modal ">OK</button>
@@ -76,6 +81,11 @@
   </div>
 </div>
 <br>
-
+<script>
+$("#articleNotes").text();
+      $('#myModal1').modal("show")
+ </script>
+  
 {{/each}}
 </div>
+

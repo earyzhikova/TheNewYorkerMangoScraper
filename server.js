@@ -101,7 +101,7 @@ app.post("/save/articles", function (req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function (req, res) {
   // db.Article.find({}).then(function (dbArticle) {
-  // Make a request for the news section of `ycombinator`
+  // Make a request for the news section 
   request("https://www.newyorker.com/news", function (error, response, html) {
     // Load the html body from request into cheerio
     var $ = cheerio.load(html);

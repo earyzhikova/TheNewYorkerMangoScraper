@@ -39,8 +39,12 @@ $(document).ready(function () {
 
       data = JSON.parse(data);
     }, 'json');
-    alert(article.link);
+   
+  
+
   });
+
+  
 
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function () {
