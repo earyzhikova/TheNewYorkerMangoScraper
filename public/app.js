@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
   $("#btnScrape").click(function () {
+    $("#wrapper").empty();
     $.get("/scrape", function (data, status) {
       data = JSON.parse(data);
       for (var i = 0; i < data.length; i++) {
@@ -9,7 +10,7 @@ $(document).ready(function () {
           `<div class="card">
             <div class="card-header">
               <a href = "` + data[i].link + `">` + data[i].title + `</a>
-              <button type="button" class="btn btn-secondary btn-lg float-right saveArticle">Save article</button>
+              
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
@@ -26,25 +27,25 @@ $(document).ready(function () {
     });
   });
 
-  
-  $(document).on('click', 'button.saveArticle', function () {
-    var article = {}
-    article.title = $(this).parent().parent().find("a").text();
-    article.link = $(this).parent().parent().find("a").attr("href");
-    article.summary = $(this).parent().parent().find("p").text();
+
+  // $(document).on('click', 'button.saveArticle', function () {
+  //   var article = {}
+  //   article.title = $(this).parent().parent().find("a").text();
+  //   article.link = $(this).parent().parent().find("a").attr("href");
+  //   article.summary = $(this).parent().parent().find("p").text();
 
 
-    $.post("/save/articles", article ,function (data, status) {
+  //   $.post("/save/articles", article ,function (data, status) {
 
 
-      data = JSON.parse(data);
-    }, 'json');
-   
-  
+  //     data = JSON.parse(data);
+  //   }, 'json');
 
-  });
 
-  
+
+  // });
+
+
 
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function () {
@@ -113,6 +114,42 @@ $(document).ready(function () {
     /* <button type="button" class="btn btn-secondary btn-lg float-right" id="saveArticle">Article Notes</button>
               <button type="button" class="btn btn-secondary btn-lg float-right" id="saveArticle">Delete from Saved</button> */
   }
+
+
+  // This function deletes from saved articles when the user clicks the button
+  $(document).on('click', 'button.deleteFromSaved', function () {
+  
+      
+      var id = $(this).data("_id");
+      $.ajax({
+        type: "DELETE",
+        url: "/deleteArticle" + id
+      }).then(function (data) {
+
+
+      }).catch(function (err) {
+        // If an error occurred, send it to the client
+        return res.json(err);
+      });
+    
+  });
+
+  $(document).on('click', 'button.articleNotes', function () {
+
+    $('#myModal1').modal("show");
+    //   $.post("/save/articles", article ,function (data, status) {
+
+
+    //     data = JSON.parse(data);
+    //   }, 'json');
+
+
+
+  });
+
+
+
+
 
   //END OF DOCUMENT READY
 });

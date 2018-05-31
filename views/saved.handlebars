@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">The New Yorker Mango Scraper</a>
+t<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <img class="navbar-brand" href="#" src="/assets/images/ny1.jpg" />Mango Scraper</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
     aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -19,42 +19,41 @@
 </nav>
 <br> 
 
-{{!-- Model --}}
+{{!--Note Modal --}}
 <div class="modal" id="myModal1" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 id="titleinput" class="modal-title">Notes for Article: #
-          <span id=idNumber "></span> </h5>
-        <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-          <span aria-hidden="true ">&times;</span>
+        <h5 class="modal-title">Notes for Article: #
+          <span id="idNumber"></span> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body ">
         <div class="input-group mb-3 ">
   
-  <input type="text " class="form-control " placeholder="New Note " aria-label="Newnote " aria-describedby="basic-addon1 ">
+  <input type="text " class="form-control " placeholder="No notes for this article yet" aria-label="Newnote" aria-describedby="basic-addon1 ">
 </div>
 
 <div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">With textarea</span>
-  </div>
-  <textarea class="form-control" aria-label="With textarea"></textarea>
+  
+  <textarea class="form-control" id="bodyinput" aria-label="With textarea">New Note</textarea>
 </div>
-        <p id = "savenote " placeholder="No Notes for this article yet "></p>
-        <br>
-        <hr>
-        <br>
-        <p id="bodyinput " placeholder="New Note "></p>
-      </div>
+        
       <div class="modal-footer ">
-        <button type="button " class="btn btn-secondary " data-dismiss="modal ">OK</button>
+        <button type="button" id="savenote" saclass="btn btn-secondary " data-dismiss="modal">Save Note</button>
       </div>
     </div>
   </div>
 </div>
-<br>   
+</div>
+{{!-- end of Note Modal --}}
+<br> 
+
+
+
+
 <div id="wrapper ">
   <!-- Content -->
   
@@ -67,12 +66,13 @@
 
 
 <br>
+{{!-- Saved  --}}
 <div class="card ">
   <div class="card-header ">
     <a href = "{{this.link}} ">{{this.title}}</a> 
       <button type="button" class="btn btn-secondary btn-lg float-right" id="deleteFromSaved">Delete from Saved</button>
-     <button type="button" class="btn btn-secondary btn-lg float-right" id="articleNotes">Article Notes</button>
-              
+     <button type="button" class="btn btn-secondary btn-lg float-right articleNotes" >Article Notes</button>
+    <input type="hidden" class="articleId" value="{{this._id}}"/>
   </div>
   <div class="card-body ">
     <blockquote class="blockquote mb-0 ">
@@ -81,10 +81,7 @@
   </div>
 </div>
 <br>
-<script>
-$("#articleNotes").text();
-      $('#myModal1').modal("show")
- </script>
+
   
 {{/each}}
 </div>

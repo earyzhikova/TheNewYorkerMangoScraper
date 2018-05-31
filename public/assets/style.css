@@ -23,9 +23,7 @@ a#btnScrape.nav-link {
 
 h2 {
   width: 100%;
-  color: black;
+  position: center;
  }
 
- marquee { 
-   overflow:visible; -moz-binding:none; 
-  }
+ 

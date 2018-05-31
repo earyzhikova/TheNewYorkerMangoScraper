@@ -52,7 +52,7 @@ app.get("/", function (req, res) {
 
 app.get("/saved", function (req, res) {
   db.Article.find({}).then(function (dbArticle) {
-    // console.log(dbArticle);
+    console.log(dbArticle);
     var hdbObject = {
       articles: dbArticle
 
@@ -92,9 +92,9 @@ app.post("/save/articles", function (req, res) {
         .catch(function (err) {
           // If an error occurred, send it to the client
           return res.json(err);
-      });
+        });
     };
-    
+
 
   });
 });
@@ -126,10 +126,36 @@ app.get("/scrape", function (req, res) {
         result.push(article);
 
       });
-      res.json(JSON.stringify(result));
-      // });
+      db.Article.find({}).then(function (dbArticle) {
+        for (j = 0; j < result.length; j++) {
+          var alreadyExists = false;
+          for (i = 0; i < dbArticle.length; i++) {
+
+            if (result[j].title == dbArticle[i].title) {
+              alreadyExists = true;
+            }
+          }
+
+          if (alreadyExists == false) {
+
+            // Create a new Article using the `result` object built from scraping
+            db.Article.create(result[j])
+              .then(function (dbArticle) {
+                // View the added result in the console
+                console.log(dbArticle);
+              })
+              .catch(function (err) {
+                // If an error occurred, send it to the client
+                return res.json(err);
+              });
+          };
+        }
+        res.json(JSON.stringify(result));
+      });
     });
+
   });
+
 
   // Send a "Scrape Complete" message to the browser
   // res.send("Scrape Complete");
