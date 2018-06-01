@@ -52,7 +52,6 @@ app.get("/", function (req, res) {
 
 app.get("/saved", function (req, res) {
   db.Article.find({}).then(function (dbArticle) {
-    console.log(dbArticle);
     var hdbObject = {
       articles: dbArticle
 
@@ -61,43 +60,43 @@ app.get("/saved", function (req, res) {
   });
 });
 
-// route for saving an article to DB
+// // route for saving articles to DB
 
-app.post("/save/articles", function (req, res) {
-  var articleToSave = req.body;
+// app.post("/save/articles", function (req, res) {
+//   var articleToSave = req.body;
 
-  db.Article.find({}).then(function (dbArticle) {
-    var alreadyExists = false;
-    for (i = 0; i < dbArticle.length; i++) {
-      if (articleToSave.title == dbArticle[i].title) {
-        alreadyExists = true;
-      }
-    }
+//   db.Article.find({}).then(function (dbArticle) {
+//     var alreadyExists = false;
+//     for (i = 0; i < dbArticle.length; i++) {
+//       if (articleToSave.title == dbArticle[i].title) {
+//         alreadyExists = true;
+//       }
+//     }
 
-    if (alreadyExists == false) {
-      // Save an empty result object
-      var result = {};
+//     if (alreadyExists == false) {
+//       // Save an empty result object
+//       var result = {};
 
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = articleToSave.title;
-      result.link = articleToSave.link;
-      result.summary = articleToSave.summary;
+//       // Add the text and href of every link, and save them as properties of the result object
+//       result.title = articleToSave.title;
+//       result.link = articleToSave.link;
+//       result.summary = articleToSave.summary;
 
-      // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
-        .then(function (dbArticle) {
-          // View the added result in the console
-          console.log(dbArticle);
-        })
-        .catch(function (err) {
-          // If an error occurred, send it to the client
-          return res.json(err);
-        });
-    };
+//       // Create a new Article using the `result` object built from scraping
+//       db.Article.create(result)
+//         .then(function (dbArticle) {
+//           // View the added result in the console
+//           console.log(dbArticle);
+//         })
+//         .catch(function (err) {
+//           // If an error occurred, send it to the client
+//           return res.json(err);
+//         });
+//     };
 
 
-  });
-});
+//   });
+// });
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function (req, res) {
   // db.Article.find({}).then(function (dbArticle) {
@@ -156,60 +155,70 @@ app.get("/scrape", function (req, res) {
 
   });
 
-
-  // Send a "Scrape Complete" message to the browser
-  // res.send("Scrape Complete");
 });
 
-// Route for getting all Articles from the db
-app.get("/articles", function (req, res) {
-  // Grab every document in the Articles collection
-  db.Article.find({})
-    .then(function (dbArticle) {
-      // If we were able to successfully find Articles, send them back to the client
-      res.json(dbArticle);
-    })
-    .catch(function (err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
-});
+// // Route for getting all Articles from the db
+// app.get("/articles", function (req, res) {
+//   // Grab every document in the Articles collection
+//   db.Article.find({})
+//     .then(function (dbArticle) {
+//       // If we were able to successfully find Articles, send them back to the client
+//       res.json(dbArticle);
+//     })
+//     .catch(function (err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
 
 
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function (req, res) {
-  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  db.ArticlefindOne({
-      _id: req.params.id
-    })
-    // ..and populate all of the notes associated with it
-    .populate("note")
-    .then(function (dbArticle) {
-      // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function (err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
+  
+  //associated article ids are stored in the notes collection entries, do find for notes with matching article IDs
+  db.Note.find({'articleId': req.params.id})
+  .then(function (dbArticle) {
+    // If we were able to successfully find an Article with the given id, send it back to the client
+    res.json(dbArticle);
+  })
+  .catch(function (err) {
+    // If an error occurred, send it to the client
+    res.json(err);
+  });
+
+  // db.ArticlefindOne({
+  //     _id: req.params.id
+  //   })
+  //   // ..and populate all of the notes associated with it
+  //   .populate("note")
+  //   .then(function (dbArticle) {
+  //     // If we were able to successfully find an Article with the given id, send it back to the client
+  //     res.json(dbArticle);
+  //   })
+  //   .catch(function (err) {
+  //     // If an error occurred, send it to the client
+  //     res.json(err);
+  //   });
 });
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function (req, res) {
   // Create a new note and pass the req.body to the entry
+  console.log(req.body);
+
   db.Note.create(req.body)
     .then(function (dbNote) {
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
       // { new: true } tells the query that we want it to return the updated Article -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Article.findOneAndUpdate({
-        _id: req.params.id
-      }, {
-        note: dbNote._id
-      }, {
-        new: true
-      });
+      // return db.Note.findOneAndUpdate({
+      //   _id: req.params.id
+      // }, {
+      //   note: dbNote._id
+      // }, {
+      //   new: true
+      // });
     })
     .then(function (dbArticle) {
       // If we were able to successfully update an Article, send it back to the client
@@ -217,6 +226,20 @@ app.post("/articles/:id", function (req, res) {
     })
     .catch(function (err) {
       // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+// Route for removing an Article
+app.delete("/articles/:id", function (req, res) {
+  // Create a new article and pass the req.body to the entry
+  db.Article.remove({"_id" : req.params.id})
+    .then(function (dbArticle) {
+      console.log('reached response');
+      res.json({"result" : "success"})
+    })
+    .catch(function (err) {
+  //     // If an error occurred, send it to the client
       res.json(err);
     });
 });

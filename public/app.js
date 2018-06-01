@@ -91,8 +91,7 @@ $(document).ready(function () {
         method: "POST",
         url: "/articles/" + thisId,
         data: {
-          // Value taken from title input
-          title: $("#titleinput").val(),
+          articleId: $("#idNumber").text(),
           // Value taken from note textarea
           body: $("#bodyinput").val()
         }
@@ -110,23 +109,18 @@ $(document).ready(function () {
     $("#bodyinput").val("");
   });
 
-  {
-    /* <button type="button" class="btn btn-secondary btn-lg float-right" id="saveArticle">Article Notes</button>
-              <button type="button" class="btn btn-secondary btn-lg float-right" id="saveArticle">Delete from Saved</button> */
-  }
+  
 
 
   // This function deletes from saved articles when the user clicks the button
   $(document).on('click', 'button.deleteFromSaved', function () {
-  
-      
-      var id = $(this).data("_id");
+    var deleteButton = this;
+    var id = $(this).parent().children('.articleId').val();
       $.ajax({
         type: "DELETE",
-        url: "/deleteArticle" + id
+        url: "/articles/" + id
       }).then(function (data) {
-
-
+        $(deleteButton).parent().parent().parent().remove();
       }).catch(function (err) {
         // If an error occurred, send it to the client
         return res.json(err);
@@ -135,7 +129,16 @@ $(document).ready(function () {
   });
 
   $(document).on('click', 'button.articleNotes', function () {
+    var articleId = $(this).parent().children('.articleId').val();
+    $("#idNumber").text(articleId);
+    $.get("/articles/" + articleId, article ,function (data, status) {
 
+
+          // data = JSON.parse(data);
+        }, 'json');
+    $("#savedNotes").empty();
+
+    $('#savedNotes').append();
     $('#myModal1').modal("show");
     //   $.post("/save/articles", article ,function (data, status) {
 
