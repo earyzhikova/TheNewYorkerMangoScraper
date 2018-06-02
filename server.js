@@ -30,7 +30,7 @@ app.use(express.static("public"));
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newyorker";
-
+var PORT = process.env.PORT || 3000;
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
@@ -281,8 +281,7 @@ app.delete("/articles/:id", function (req, res) {
     });
 });
 
-
 // Listen on port 3000
-app.listen(3000, function () {
+app.listen(PORT, function () {
   console.log("App running on port 3000!");
 });
