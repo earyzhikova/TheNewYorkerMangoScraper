@@ -31,12 +31,13 @@ t<nav class="navbar navbar-expand-lg navbar-light bg-light">
         </button>
       </div>
       <div class="modal-body ">
-        <div class="input-group mb-3 ">
-  <div id="savedNotes">No notes for this article yet 
-
-  </div>
-</div>
-
+        <div class="input-group mb-3 savedNotes titleinput">
+       No notes for this article yet 
+       </div>
+      </div>
+      
+      
+ 
 <div class="input-group">
   
   <textarea class="form-control" id="bodyinput" aria-label="With textarea" placeholder="New Note"></textarea>
@@ -70,7 +71,7 @@ t<nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="card ">
   <div class="card-header ">
     <a href = "{{this.link}} ">{{this.title}}</a> 
-      <button type="button" class="btn btn-secondary btn-lg float-right deleteFromSaved">Delete from Saved</button>
+      <button type="button" class="btn btn-primary btn-lg float-right deleteFromSaved">Delete from Saved</button>
      <button type="button" class="btn btn-secondary btn-lg float-right articleNotes" >Article Notes</button>
     <input type="hidden" class="articleId" value="{{this._id}}"/>
   </div>

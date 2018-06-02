@@ -47,11 +47,11 @@ $(document).ready(function () {
 
 
 
-  // Whenever someone clicks a p tag
-  $(document).on("click", "p", function () {
+  // Whenever someone clicks a button
+  $(document).on("click", "button.savenote", function () {
     // Empty the notes from the note section
     $("#notes").empty();
-    // Save the id from the p tag
+    // Save the id 
     var thisId = $(this).attr("data-id");
 
     // Now make an ajax call for the Article
@@ -91,7 +91,7 @@ $(document).ready(function () {
         method: "POST",
         url: "/articles/" + thisId,
         data: {
-          articleId: $("#idNumber").text(),
+          title: $("#titleinput").text(),
           // Value taken from note textarea
           body: $("#bodyinput").val()
         }
@@ -126,19 +126,19 @@ $(document).ready(function () {
         return res.json(err);
       });
     
-  });
+    });
 
   $(document).on('click', 'button.articleNotes', function () {
     var articleId = $(this).parent().children('.articleId').val();
     $("#idNumber").text(articleId);
-    $.get("/articles/" + articleId, article ,function (data, status) {
+    // $.get("/articles/" + articleId, article, function (data, status) {
 
 
           // data = JSON.parse(data);
-        }, 'json');
+        // }, 'json');
     $("#savedNotes").empty();
 
-    $('#savedNotes').append();
+    $('#savedNotes').text();
     $('#myModal1').modal("show");
     //   $.post("/save/articles", article ,function (data, status) {
 
