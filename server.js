@@ -8,7 +8,7 @@ var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 
 // Require all models
-var db = require("./models");
+var db = require("./models/index");
 
 // Initialize Express
 var app = express();
