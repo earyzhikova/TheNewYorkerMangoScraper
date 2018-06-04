@@ -102,7 +102,7 @@ $(document).ready(function () {
         // Log the response
         console.log(data);
         // Empty the notes section
-        $("#notes").empty();
+        $("#bodyinput").empty();
       });
 
     // Also, remove the values entered in the input and textarea for note entry
@@ -137,20 +137,51 @@ $(document).ready(function () {
 
           // data = JSON.parse(data);
         // }, 'json');
-    $("#savedNotes").empty();
+    $("#noteSection").empty();
+    console.log("about to add notes")
+    $.get("/articles/" + articleId, function (data, status) {
+      // console.log(data);
+      // console.log(data.notes)
+      data.notes.forEach(function (note){
+        console.log(note.body);
+        $('#noteSection').append(`
+        <div class="row>
+        <div class="col-12">
+        <div class="card">
+           <div class="card-body">`
+           + note.body +
+           `<button type="button" class="close deleteNote" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+           <input type='hidden' class='noteId' value='` + note._id + `'>
+           </div>
+       </div></div> </div>`);
 
-    $('#savedNotes').text();
+     
+      });
+    });
+    // $('#savedNotes').text();
     $('#myModal1').modal("show");
     //   $.post("/save/articles", article ,function (data, status) {
 
 
     //     data = JSON.parse(data);
     //   }, 'json');
-
-
-
   });
 
+// When user clicks the delete button for a note
+$(document).on("click", ".deleteNote", function() {
+  var id = $(this).parent().children('.noteId').val();
+  $.ajax({
+    type: "DELETE",
+    url: "/delete/" + id,
+  }).then(function (data) {
+    // $(deleteButton).parent().parent().parent().remove();
+  }).catch(function (err) {
+    // If an error occurred, send it to the client
+    console.log('ERROR: ' +json(err));
+  });
+});
 
 
 
